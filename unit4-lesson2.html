@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Time Machine - Past Tense Adventure</title>
+    <style>
+
+.game-container {
+    text-align: center;
+}
+
+.game-item {
+    margin-bottom: 20px;
+}
+
+.game-button {
+    background-color: #FFEB3B;
+    color: #0A1F44;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin: 5px;
+}
+
+.game-button:hover {
+    transform: scale(1.1);
+    background-color: #FFD600;
+}
+
+.game-result {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    transform: scale(1.1);
+    background-color: #388E3C;
+}
+
+        /* Audio Player Styling */
+        .title-slide {
+        text-align: center;
+        padding: 50px 20px;
+        background-color: #FFEB3B;
+        color: #333;
+        border-radius: 15px;
+    }
+
+    .title-header {
+        font-size: 3em;
+        font-weight: bold;
+        color: #1976D2;
+        margin-bottom: 10px;
+    }
+
+    .lesson-header {
+        font-size: 2em;
+        font-weight: normal;
+        color: #F57C00;
+        margin-bottom: 20px;
+    }
+
+    .title-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+        .audio-player {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #FFEB3B;
+            /* Soft yellow for a friendly feel */
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slideInAudio 1s ease-out forwards;
+        }
+
+        /* Slide-in Animation for Audio Player */
+        @keyframes slideInAudio {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Customize the appearance of the audio controls */
+        audio {
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+            background-color: #FFF3CD;
+            /* Light background for the audio player */
+            padding: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background-color: #f0f9ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .active-slide {
+            display: block;
+        }
+
+        .time-machine {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            background: url('placeholder.png');
+            background-size: contain;
+            animation: slideIn 1s ease-out;
+        }
+
+        .grammar-robot {
+            width: 150px;
+            float: right;
+            margin: 0 0 20px 20px;
+        }
+
+        .speech-bubble {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px;
+            position: relative;
+            transform: scale(0);
+            animation: popIn 0.5s forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes popIn {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .interactive-box {
+            border: 3px dashed #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .interactive-box:hover {
+            background-color: #e8f5e9;
+        }
+
+        .answer-blank {
+            display: inline-block;
+            width: 80px;
+            border-bottom: 2px solid #2196F3;
+            margin: 0 5px;
+        }
+
+        .nav-buttons {
+            text-align: center;
+            margin: 20px;
+        }
+
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background-color: #1976D2;
+        }
+
+        .speech-bubble {
+        background: #fff3cd;
+        padding: 20px;
+        border-radius: 15px;
+        margin: 20px;
+        position: relative;
+        transform: scale(0);
+        animation: popIn 0.5s forwards;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes popIn {
+        to {transform: scale(1);}
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- Slide 1 - Time Machine Intro -->
+    <div class="slide active-slide">
+        
+        <div class="time-machine"></div>
+        <h1 style="color: #2196F3; text-align: center;">🕒 Grammar Time Machine! 🚀</h1>
+        <div class="speech-bubble">
+            <p>Ready to time travel? Today we'll discover:</p>
+            <ul>
+                <li>There was / There were</li>
+                <li>There wasn't / There weren't</li>
+            </ul>
+            <img src="assets/timetravel.png" alt="Getting Around" class="title-image" />
+        </div>
+       
+        <button onclick="nextSlide()">Start Time Travel!</button>
+    </div>
+
+    <div class="slide title-slide">
+        <h1 class="title-header">Unit 4: Getting Around</h1>
+        <h2 class="lesson-header">Lesson 2: Grammar</h2>
+    
+        <img src="assets/title.png" alt="Getting Around" class="title-image" />
+    
+        <div class="nav-buttons">
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <!-- Slide 2 - Warm-up Activity -->
+    <div class="slide">
+       
+        <div class="speech-bubble">
+            <h2>Warm-up Challenge! 🤔</h2>
+            <p>What didn't exist 100 years ago?</p>
+            <div class="interactive-box" onclick="this.innerHTML = '🚫 No smartphones! 🚫'">
+                Click to reveal!
+            </div>
+            <div class="interactive-box" onclick="this.innerHTML = '🚫 No TV! 🚫'">
+                Click to reveal!
+            </div>
+            <div class="interactive-box" onclick="this.innerHTML = '🚫 No Internet! 🚫'">
+                Click to reveal!
+            </div>
+
+        </div>
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">← Back</button>
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h1 style="text-align: center;">🎶 Listen to the Story and Repeat 🗣️</h1>
+    
+        <div class="audio-player">
+            <audio controls>
+                <source src="assets/recording43.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    
+        <div class="speech-bubble">
+            <p>Listen carefully to the story below. Then, repeat after it!</p>
+        </div>
+    
+        <img src="assets/recording43.png" alt="At the museum" />
+    
+        <div class="nav-buttons">
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+    
+    <!-- Slide 2: Listen and Say -->
+    <div class="slide">
+        <h1 style="text-align: center;">🎤 Listen and Say! 🗣️</h1>
+    
+        <div class="audio-player">
+            <audio controls>
+                <source src="assets/recording44.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    
+        <div class="speech-bubble">
+            <p>Listen to the sentence and try to say it out loud!</p>
+            
+        </div>
+    
+        <img src="assets/recording44.png" alt="Rec44" />
+    
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">← Back</button>
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <!-- Slide 3 - Grammar Discovery -->
+    <div class="slide">
+        <h2 style="color: #4CAF50;">🕵️ Grammar Detective Time!</h2>
+        <div class="speech-bubble">
+            <p>Let's look at these sentences:</p>
+            <p>There <span class="answer-blank">was</span> a park 50 years ago.</p>
+            <p>There <span class="answer-blank">weren't</span> any planes 200 years ago.</p>
+        </div>
+        <img src="assets/park.png" style="width: 60%; margin: 20px auto; display: block;" alt="Historical images">
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">← Back</button>
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <!-- Slide 4 - Practice Zone -->
+    <div class="slide">
+        <h2 style="color: #FF9800;">Practice Station ✏️</h2>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> a park in our town 100 years ago.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'was'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> trains 100 years ago.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'were'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> a supermarket in the town 10 years ago.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'was'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> lots of busses 20 years ago.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'were'">Show Answer</button>
+        </div>
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">← Back</button>
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 style="color: #FF9800;">Look and write about a party last saturday. </h2>
+        <image src="assets/exercise4.png"></image>
+        <div class="interactive-box">
+            <p>There <b>wasn't</b> a singer a the party on Saturday.</p>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> some children at the party.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'were'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> any flowers in the room.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'weren\'t'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> lots of sandwiches at the party.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'were'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> some baloons in the room.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'were'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> a clown in the room.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'was'">Show Answer</button>
+        </div>
+        <div class="interactive-box">
+            <p>There <span class="answer-blank">___</span> lots of busses 20 years ago.</p>
+            <button onclick="this.parentElement.querySelector('span').innerHTML = 'were'">Show Answer</button>
+        </div>
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">← Back</button>
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+
+
+    <!-- Slide 5 - Time Travel Game -->
+    <div class="slide">
+        <h2 style="color: #9C27B0;">🕹️ Time Travel Game! 🎮</h2>
+        <div class="speech-bubble">
+            <p>Describe your town 50 years ago:</p>
+            <div class="interactive-box">
+                There <input type="text" style="width: 80px;" placeholder="was/were">
+                <input type="text" style="width: 120px;" placeholder="something">.
+            </div>
+        </div>
+        <img src="assets/production.png" style="height: 600px; display: block; margin: 20px auto;" alt="Old town image">
+        <div class="nav-buttons">
+            <button onclick="prevSlide()">← Back</button>
+            <button onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <!-- Slide 7 - Grammar Detective Game (There Was/Were) -->
+    <div class="slide">
+        <h2 class="game-header" style="color: #FF9800;">🕵️‍♂️ Grammar Detective!</h2>
+        <p>Help us solve the case! Choose the correct word to complete the sentence:</p>
+    
+        <div class="game-item">
+            <p><strong>1. There ____ a cat in the garden.</strong></p>
+            <div class="game-buttons">
+                <button onclick="checkAnswer(0, 'was')">was</button>
+                <button onclick="checkAnswer(0, 'were')">were</button>
+                <button onclick="checkAnswer(0, 'wasn’t')">wasn't</button>
+                <button onclick="checkAnswer(0, 'weren’t')">weren't</button>
+            </div>
+            <p id="result-0" class="game-result"></p>
+            <img id="image-0" class="game-image" src="assets/cat.png" alt="Cat in the garden">
+        </div>
+    
+        <div class="game-item">
+            <p><strong>2. There ____ many people at the party yesterday.</strong></p>
+            <div class="game-buttons">
+                <button onclick="checkAnswer(1, 'was')">was</button>
+                <button onclick="checkAnswer(1, 'were')">were</button>
+                <button onclick="checkAnswer(1, 'wasn’t')">wasn't</button>
+                <button onclick="checkAnswer(1, 'weren’t')">weren't</button>
+            </div>
+            <p id="result-1" class="game-result"></p>
+            <img id="image-1" class="game-image" src="assets/party2.png" alt="People at a party">
+        </div>
+    
+        <div class="game-item">
+            <p><strong>3. There ____ any ice cream in the fridge.</strong></p>
+            <div class="game-buttons">
+                <button onclick="checkAnswer(2, 'was')">was</button>
+                <button onclick="checkAnswer(2, 'were')">were</button>
+                <button onclick="checkAnswer(2, 'wasn’t')">wasn't</button>
+                <button onclick="checkAnswer(2, 'weren’t')">weren't</button>
+            </div>
+            <p id="result-2" class="game-result"></p>
+            <img id="image-2" class="game-image" src="assets/icecream.png" alt="Empty fridge">
+        </div>
+
+        <div class="game-item">
+            <p><strong>3. There ____ many cars 50 years ago.</strong></p>
+            <div class="game-buttons">
+                <button onclick="checkAnswer(2, 'was')">was</button>
+                <button onclick="checkAnswer(2, 'were')">were</button>
+                <button onclick="checkAnswer(2, 'wasn’t')">wasn't</button>
+                <button onclick="checkAnswer(2, 'weren’t')">weren't</button>
+            </div>
+            <p id="result-2" class="game-result"></p>
+            <img id="image-2" class="game-image" src="https://images.bauerhosting.com/legacy/empire-tmdb/films/920/images/a1MlbLBk5Sy6YvMbSuKfwGlDVlb.jpg?ar=16%3A9&fit=crop&crop=top&auto=format&w=undefined&q=80" alt="Empty fridge">
+        </div>
+    
+        <button onclick="nextSlide()" class="submit-button">Next →</button>
+    </div>
+    
+    
+
+
+    <!-- Slide 6 - Homework Mission -->
+    <div class="slide">
+        <image src="assets/hometown.png"></image>
+        <div class="time-machine"></div>
+        <h2 style="color: #2196F3;">📚 Homework Mission! 🚀</h2>
+        <div class="speech-bubble">
+            <p>Write 3 sentences about your hometown:</p>
+            <p>Example: "There was a big tree in the park 10 years ago."</p>
+        </div>
+        <button onclick="nextSlide()">Finish Time Travel!</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active-slide'));
+            slides[n].classList.add('active-slide');
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+    <script>
+let correctAnswers = {
+    0: "was",
+    1: "were",
+    2: "wasn’t",
+    3: "weren’t"
+};
+
+function checkAnswer(questionIndex, selected) {
+    let resultElement = document.getElementById(`result-${questionIndex}`);
+    let imageElement = document.getElementById(`image-${questionIndex}`);
+
+    if (selected === correctAnswers[questionIndex]) {
+        resultElement.textContent = "✅ Correct!";
+        resultElement.style.color = "#4CAF50";
+        imageElement.style.opacity = "1";  // Show image
+    } else {
+        resultElement.textContent = "❌ Try again!";
+        resultElement.style.color = "#D32F2F";
+        imageElement.style.opacity = "0";  // Hide image
+    }
+}
+
+
+    </script>
+</body>
+
+</html>
